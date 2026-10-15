@@ -1,0 +1,56 @@
+name: Deploy CRISPER Studio to GitHub Pages
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'projects/crisper-studio/**'
+      - '.github/workflows/crisper-studio-pages.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'projects/crisper-studio/**'
+      - '.github/workflows/crisper-studio-pages.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: crisper-studio-pages
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: projects/crisper-studio
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Run unit tests
+        run: npm test
+      - name: Build static site
+        run: npm run build
+      - name: Add Pages no-Jekyll marker
+        run: touch dist/.nojekyll
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: projects/crisper-studio/dist
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
