@@ -1,22 +1,23 @@
 # CRISPER Studio Clone
 
-CRISPER Studio is a computational DNA analysis and research-workbench prototype. It is a separate project within `Program-test`, distinct from the ENIAC simulator.
+CRISPER Studio is a local-first computational DNA analysis and research-workbench prototype. It is a separate project within `Program-test`, distinct from the ENIAC simulator.
 
-## Current repository implementation
+## Source tree
 
-The browser prototype and core sequence utilities are committed here:
+- `src/main.tsx` — React entry point
+- `src/ui/App.tsx` — research workspace interface
+- `src/ui/styles.css` — responsive dark command-center theme
+- `src/core/dna.ts` — sequence validation, composition counts, GC percentage, reverse complement, in-silico edit preview, and illustrative sequence-window heuristic
+- `src/core/store.ts` — typed browser-storage and desktop persistence adapter
+- `electron/main.cjs` — Electron main process and validated SQLite IPC handlers
+- `electron/preload.cjs` — isolated desktop API bridge
+- `electron/schema.sql` — SQLite schema for projects, sequences, simulations, notes, and audit events
+- `tests/dna.test.ts` — unit tests for the analysis utilities
+- `docs/` — architecture, database, and implementation-status documentation
+- `electron-builder.yml` — Windows NSIS packaging configuration
+- `../../.github/workflows/crisper-studio.yml` — GitHub Actions test/build workflow
 
-- `src/main.tsx` — React browser UI
-- `src/core/dna.ts` — sequence validation, counts, GC percentage, reverse complement, edit preview, illustrative sequence-window scoring
-- `tests/dna.test.ts` — core utility tests
-- `index.html`, `vite.config.ts`, `tsconfig.json`, `package.json` — web tooling
-- `../../.github/workflows/crisper-studio.yml` — CI workflow for tests and production build
-
-## Full desktop source archive
-
-The supplied **CRISPER-Studio-Complete-Clone.zip** contains the additional Electron shell, SQLite schema, local persistence adapter, expanded UI, and related documentation. Not all files from that archive have been copied into this repository yet; the current GitHub project should be treated as a browser prototype plus documentation, not a complete desktop clone.
-
-## Run the browser prototype
+## Run in a browser
 
 Requires Node.js 20+ and npm.
 
@@ -27,12 +28,27 @@ npm run build
 npm run dev
 ```
 
-Run these commands from this directory. Open the local URL printed by Vite.
+Open the local URL printed by Vite.
+
+## Run the Windows desktop shell
+
+```sh
+npm install
+npm run desktop
+```
+
+The Electron main process stores records in a local SQLite database under Electron's application data directory. Native dependency setup can vary by Node/Electron version; if SQLite reports a native module ABI error, run `npm run rebuild:native` after installing the platform build prerequisites.
+
+To build a Windows installer on Windows:
+
+```sh
+npm run package:win
+```
+
+## Data and safety
+
+The browser prototype stores demo data in browser local storage; desktop mode uses SQLite. Sequence-window scores are transparent educational heuristics and are not validated biological predictions. This software does not provide clinical guidance, laboratory protocols, or validation of biological activity. Treat imported sequence data as sensitive and use only data you are authorized to process.
 
 ## Verification status
 
-Dependency installation was attempted in the current execution environment but timed out. The tests and production build have not been confirmed to pass here. The CI workflow is configured to run both on GitHub Actions.
-
-## Safety and scope
-
-This is computational research software. Sequence-window scores are illustrative heuristics, not validated biological predictions. The project does not provide laboratory protocols or validate biological activity.
+Source files and a GitHub Actions workflow are committed. A local dependency installation previously timed out in the execution environment, so test and production-build success must be confirmed by the workflow before a release is considered verified.
