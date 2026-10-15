@@ -1,25 +1,34 @@
 # Implementation and Verification Status
 
-## Source package contents
+## Committed to this repository
 
-The supplied archive contains 21 files: application metadata/configuration, React/TypeScript UI, Electron main and preload files, SQLite schema, DNA utilities, tests, and documentation.
+- [x] Browser React/TypeScript entry point
+- [x] DNA sequence validation and analysis utilities
+- [x] Reverse complement and GC percentage
+- [x] In-silico edit preview
+- [x] Transparent illustrative sequence-window scoring
+- [x] Unit test source for core utilities
+- [x] Vite and TypeScript configuration
+- [x] GitHub Actions test/build workflow
+- [x] Architecture and SQLite documentation
 
-## Verification status
+## Not yet verified
 
-- [ ] Install dependencies with `npm install`
-- [ ] Run unit tests with `npm test`
-- [ ] Build renderer with `npm run build`
-- [ ] Launch desktop shell with `npm run desktop`
+- [ ] Install dependencies successfully
+- [ ] Run unit tests and inspect results
+- [ ] Complete production build
+- [ ] Run browser smoke test
+- [ ] Copy all Electron/SQLite desktop source files from the supplied archive into this folder
 - [ ] Verify SQLite creation, persistence, and restart behavior
 - [ ] Verify IPC validation and renderer isolation
-- [ ] Add CI workflow and retain test/build artifacts
+- [ ] Add migration and recovery tests
 
-No item above should be marked complete until the command or test has been run and its result inspected. This status file is intentionally explicit so a source scaffold is not confused with a verified release.
+An `npm install` attempt in the current execution environment timed out. Consequently, tests and builds are not claimed as passing. GitHub Actions is configured to run `npm install`, `npm test`, and `npm run build` on relevant changes.
 
 ## Next engineering steps
 
-1. Extract the source archive into this folder and reconcile its README paths.
-2. Install dependencies and fix TypeScript, Vite, Electron, and test failures.
-3. Add test coverage for invalid sequences, empty input, boundary lengths, and persistence.
-4. Add GitHub Actions for install, tests, and production build.
+1. Run the workflow and fix any dependency, TypeScript, test, or bundling failures it reports.
+2. Copy the complete Electron shell, preload API, schema, and persistence adapter from the source archive into this project.
+3. Add desktop-specific scripts and native dependency handling.
+4. Add tests for invalid sequences, boundary lengths, persistence, and IPC validation.
 5. Document Windows packaging and release steps.
