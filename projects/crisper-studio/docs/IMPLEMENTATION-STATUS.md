@@ -1,34 +1,36 @@
 # Implementation and Verification Status
 
-## Committed to this repository
+## Source files committed
 
-- [x] Browser React/TypeScript entry point
-- [x] DNA sequence validation and analysis utilities
-- [x] Reverse complement and GC percentage
-- [x] In-silico edit preview
-- [x] Transparent illustrative sequence-window scoring
+- [x] React browser entry point and research workspace UI
+- [x] Responsive stylesheet
+- [x] DNA sequence validation, base counts, GC percentage, reverse complement
+- [x] In-silico substitution/insertion/deletion preview
+- [x] Transparent illustrative sequence-window heuristic
 - [x] Unit test source for core utilities
-- [x] Vite and TypeScript configuration
+- [x] Browser local-storage persistence adapter
+- [x] Electron main process and isolated preload API
+- [x] SQLite schema for projects, sequences, simulations, notes, and audit events
+- [x] Architecture and database documentation
+- [x] Vite, TypeScript, package, and Windows packaging configuration
 - [x] GitHub Actions test/build workflow
-- [x] Architecture and SQLite documentation
 
-## Not yet verified
+## Verification status
 
-- [ ] Install dependencies successfully
+- [ ] Install dependencies successfully in CI
 - [ ] Run unit tests and inspect results
 - [ ] Complete production build
 - [ ] Run browser smoke test
-- [ ] Copy all Electron/SQLite desktop source files from the supplied archive into this folder
-- [ ] Verify SQLite creation, persistence, and restart behavior
-- [ ] Verify IPC validation and renderer isolation
-- [ ] Add migration and recovery tests
+- [ ] Launch Electron desktop shell and verify SQLite persistence
+- [ ] Verify Windows installer packaging
+- [ ] Add integration tests for IPC and database recovery
 
-An `npm install` attempt in the current execution environment timed out. Consequently, tests and builds are not claimed as passing. GitHub Actions is configured to run `npm install`, `npm test`, and `npm run build` on relevant changes.
+A local dependency installation previously timed out. Do not treat tests or builds as passing until the GitHub Actions run completes successfully. This project is a prototype, not a validated scientific or clinical application.
 
-## Next engineering steps
+## Follow-up engineering
 
-1. Run the workflow and fix any dependency, TypeScript, test, or bundling failures it reports.
-2. Copy the complete Electron shell, preload API, schema, and persistence adapter from the source archive into this project.
-3. Add desktop-specific scripts and native dependency handling.
-4. Add tests for invalid sequences, boundary lengths, persistence, and IPC validation.
-5. Document Windows packaging and release steps.
+1. Inspect GitHub Actions results and fix failures.
+2. Test SQLite foreign-key behavior, project isolation, and malformed IPC payloads.
+3. Add schema migrations and backup/recovery tests.
+4. Add export/import flows with explicit warnings for sensitive sequence data.
+5. Verify Windows packaging on a Windows runner.
