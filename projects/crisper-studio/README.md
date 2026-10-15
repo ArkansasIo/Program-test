@@ -1,47 +1,38 @@
 # CRISPER Studio Clone
 
-CRISPER Studio is a cross-platform desktop/web research-workbench prototype for computational DNA sequence analysis, project tracking, and CRISPR editing *simulation*. It is a separate project within `Program-test`; it does not modify the ENIAC simulator.
+CRISPER Studio is a computational DNA analysis and research-workbench prototype. It is a separate project within `Program-test`, distinct from the ENIAC simulator.
 
-## Source package
+## Current repository implementation
 
-The full source package is provided as **CRISPER-Studio-Complete-Clone.zip** in the associated ChatGPT conversation. It contains 21 files, including the React/TypeScript interface, Electron desktop shell, SQLite schema, DNA analysis utilities, tests, and architecture/database documentation.
+The browser prototype and core sequence utilities are committed here:
 
-## Stack
+- `src/main.tsx` — React browser UI
+- `src/core/dna.ts` — sequence validation, counts, GC percentage, reverse complement, edit preview, illustrative sequence-window scoring
+- `tests/dna.test.ts` — core utility tests
+- `index.html`, `vite.config.ts`, `tsconfig.json`, `package.json` — web tooling
+- `../../.github/workflows/crisper-studio.yml` — CI workflow for tests and production build
 
-- React + TypeScript + Vite for the user interface
-- Electron for the Windows desktop shell
-- SQLite for local project and experiment metadata
-- Vitest for DNA utility tests
+## Full desktop source archive
 
-## Planned/implemented areas
+The supplied **CRISPER-Studio-Complete-Clone.zip** contains the additional Electron shell, SQLite schema, local persistence adapter, expanded UI, and related documentation. Not all files from that archive have been copied into this repository yet; the current GitHub project should be treated as a browser prototype plus documentation, not a complete desktop clone.
 
-- DNA sequence input and basic computational sequence statistics
-- Research projects and experiment records
-- Local SQLite persistence through Electron's main process
-- CRISPR concept/simulation workspace (not laboratory control)
-- Documentation and automated test scaffold
+## Run the browser prototype
 
-Feature completeness must be established by running the test and build commands below; the source package has not yet been verified in this environment.
-
-## Run locally
-
-Requires a supported Node.js release and npm.
+Requires Node.js 20+ and npm.
 
 ```sh
 npm install
 npm test
 npm run build
-npm run desktop
+npm run dev
 ```
 
-Run commands from the extracted `CRISPER-Studio-Full/` directory. If a script is missing or fails, update `package.json` and the relevant source before treating the application as runnable.
+Run these commands from this directory. Open the local URL printed by Vite.
+
+## Verification status
+
+Dependency installation was attempted in the current execution environment but timed out. The tests and production build have not been confirmed to pass here. The CI workflow is configured to run both on GitHub Actions.
 
 ## Safety and scope
 
-This is computational research software. It must not be presented as a validated clinical tool, a substitute for expert review, or a workflow for performing biological experiments. Simulation results are illustrative and must be labeled as such. Do not include personal, patient-identifiable, or confidential genomic data in demo projects.
-
-## Documentation
-
-- [Architecture](docs/ARCHITECTURE.md)
-- [Database schema and data model](docs/DATABASE.md)
-- [Repository roadmap](../../docs/ROADMAP.md)
+This is computational research software. Sequence-window scores are illustrative heuristics, not validated biological predictions. The project does not provide laboratory protocols or validate biological activity.
